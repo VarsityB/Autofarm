@@ -1,0 +1,51 @@
+local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
+
+-- Teleport function
+local function teleportToCoordinates(position)
+    if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = CFrame.new(position)
+        print("Teleported to coordinates:", position)
+    else
+        warn("Character or HumanoidRootPart not found.")
+    end
+end
+
+-- Equip Combat tool function
+local function equipCombatTool()
+    if game.Players.LocalPlayer.Backpack:FindFirstChild("Combat") then
+        pcall(function()
+            game.Players.LocalPlayer.Backpack.Combat.Parent = game.Players.LocalPlayer.Character
+        end)
+        print("Equipped Combat tool.")
+    else
+        warn("Combat tool not found in Backpack.")
+    end
+end
+
+-- Start normal attacking for 5 minutes function
+local function startNormalAttacking()
+    local endTime = os.time() + 300  -- 300 seconds (5 minutes)
+
+    repeat
+        if game.Players.LocalPlayer.Character:FindFirstChild("Combat") then
+            game.Players.LocalPlayer.Character.Combat:Activate()
+            wait(0.0)  -- Adjust the delay between attacks if needed
+            game.Players.LocalPlayer.Character.Combat:Deactivate()
+        end
+        wait()
+    until os.time() >= endTime
+
+    print("Stopped normal attacking after 5 minutes.")
+end
+
+-- Execute teleport function
+teleportToCoordinates(targetPosition)
+
+-- Execute equip Combat tool function
+equipCombatTool()
+
+-- Execute start normal attacking function
+startNormalAttacking()
+
+
+
