@@ -36,6 +36,12 @@ local function startNormalAttacking()
     until os.time() >= endTime
 
     print("Stopped normal attacking after 5 minutes.")
+    
+    -- Unequip Combat tool after 5 minutes
+    if game.Players.LocalPlayer.Character:FindFirstChild("Combat") then
+        game.Players.LocalPlayer.Character.Combat.Parent = game.Players.LocalPlayer.Backpack
+        print("Unequipped Combat tool.")
+    end
 end
 
 -- Execute teleport function
@@ -46,6 +52,3 @@ equipCombatTool()
 
 -- Execute start normal attacking function
 startNormalAttacking()
-
-
-
