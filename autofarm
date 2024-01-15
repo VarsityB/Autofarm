@@ -58,7 +58,7 @@ if Player.Character and Player.Character:FindFirstChild("Combat") then
 end
 
 -- Load and execute the second script
-local secondScript = loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/autofarm"))
+local secondScript = loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/bbc"))
 if secondScript then
     secondScript()
     print("Second script executed.")
