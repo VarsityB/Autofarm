@@ -24,7 +24,7 @@ end
 
 -- Start normal attacking for 5 minutes function
 local function startNormalAttacking()
-    local endTime = os.time() + 600  -- 300 seconds (5 minutes)
+    local endTime = os.time() + 300  -- 300 seconds (5 minutes)
 
     repeat
         if game.Players.LocalPlayer.Character:FindFirstChild("Combat") then
@@ -35,20 +35,19 @@ local function startNormalAttacking()
         wait()
     until os.time() >= endTime
 
-    print("Stopped normal attacking after 10 minutes.")
-    
-    -- Unequip Combat tool after 10 minutes
+    print("Stopped normal attacking after 5 minutes.")
+
+    -- Unequip Combat tool after 5 minutes
     if game.Players.LocalPlayer.Character:FindFirstChild("Combat") then
         game.Players.LocalPlayer.Character.Combat.Parent = game.Players.LocalPlayer.Backpack
         print("Unequipped Combat tool.")
     end
+
+    -- Run the additional script after 5 minutes
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/buy%20buff"))()
 end
 
--- Execute teleport function
+-- Execute functions
 teleportToCoordinates(targetPosition)
-
--- Execute equip Combat tool function
 equipCombatTool()
-
--- Execute start normal attacking function
 startNormalAttacking()
