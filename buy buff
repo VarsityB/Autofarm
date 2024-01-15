@@ -1,0 +1,16 @@
+-- Teleport the player to the specified coordinates
+game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(-236.885, 19.1, -1141.76)
+
+-- Wait for the player to teleport
+wait(2)
+
+-- Find the item in the shop
+local itemName = "Boxing Moveset (Require: Max Box Stat) - $0"
+local itemToBuy = workspace.Ignored.Shop:FindFirstChild(itemName)
+
+if itemToBuy then
+    -- Click the item's ClickDetector
+    fireclickdetector(itemToBuy.ClickDetector)
+else
+    warn(itemName .. " not found in the shop.")
+end
