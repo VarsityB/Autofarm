@@ -10,13 +10,8 @@ local dataFolder = player:WaitForChild("DataFolder")
 
 local currencyTextLabel = script.Parent
 
-local webhookUrl = "" -- Default value
-
-local formatWebhook = "[WebHook] = \"%s\""
-loadstring(formatWebhook)()
-
 -- Function to send an embed message with the server's profile picture and player's current cash to a Discord webhook
-local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
+local function sendEmbedWithServerThumbnailAndCurrencyToDiscord(webhookUrl)
     local serverThumbnailUrl = "https://cdn.discordapp.com/icons/1193980576013750433/dbb27f6ecf1f5e6cdffeddd46f4cf717.png?size=1024"
 
     local formatCurrency = function(amount)
@@ -79,8 +74,17 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     }
 
     -- Send the embed message
-    HttpService:RequestAsync(request)
+    local success, response = pcall(function()
+        HttpService:RequestAsync(request)
+    end)
+
+    if not success then
+        warn("Error sending webhook:", response)
+    end
 end
+
+-- Example webhook URL, replace this with your actual webhook URL
+local webhookUrl = "YourWebhookURLHere"
 
 -- Execute the script every minute using RunService
 RunService.Heartbeat:Connect(function(deltaTime)
@@ -89,6 +93,6 @@ RunService.Heartbeat:Connect(function(deltaTime)
 
     if not lastExecutionTime or (tick() - lastExecutionTime >= interval) then
         lastExecutionTime = tick()
-        sendEmbedWithServerThumbnailAndCurrencyToDiscord()
+        sendEmbedWithServerThumbnailAndCurrencyToDiscord(webhookUrl)
     end
 end)
