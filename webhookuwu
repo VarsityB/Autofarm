@@ -10,9 +10,13 @@ local dataFolder = player:WaitForChild("DataFolder")
 
 local currencyTextLabel = script.Parent
 
+local webhookUrl = "" -- Default value
+
+local formatWebhook = "[WebHook] = \"%s\""
+loadstring(formatWebhook)()
+
 -- Function to send an embed message with the server's profile picture and player's current cash to a Discord webhook
 local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
-    local webhookUrl = "WebhookHere"
     local serverThumbnailUrl = "https://cdn.discordapp.com/icons/1193980576013750433/dbb27f6ecf1f5e6cdffeddd46f4cf717.png?size=1024"
 
     local formatCurrency = function(amount)
