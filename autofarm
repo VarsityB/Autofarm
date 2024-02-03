@@ -1,67 +1,39 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map"))()
-
 loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
-
--- Start with Enabled set to false
-getgenv().Enabled = false
-
-getgenv().Dis = function()
-    Enabled = false
-
-    for i, v in pairs(workspace:GetDescendants()) do
-        if (v:IsA("Seat")) or (v:IsA("VehicleSeat")) then
-            v.Disabled = true
-        end
-    end
-end
-
-if (not game:IsLoaded()) then
-    game.Loaded:Wait()
-    task.wait(2)
-end
-
-repeat
-    task.wait(0.2)
-until (game:GetService("Players").LocalPlayer) and (game:GetService("Players").LocalPlayer.Character)
-
-local Players = game:GetService("Players")
-local Cashiers = workspace.Cashiers
-local Player = Players.LocalPlayer
-
 -- Load the first script
-local success, result = pcall(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm"))()
-end)
-
+local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
 if not success then
-    warn("Failed to load the first script:", result)
-    return
+    warn("Error loading destory map script:", err)
 end
 
-local startTime = tick() -- Record the start time
+-- Wait for the first script to run
+wait(5)  -- Adjust the wait time based on your needs
 
--- Wait for 10 seconds
-repeat
-    task.wait(1)
-
-    -- Continue punching or any other action you want
-    if (Enabled == true) and (Player.Character) and (Player.Character:FindFirstChild("FULLY_LOADED_CHAR")) then
-        Player.Character.Combat:Activate()
-        -- You may add more actions here if needed
-    end
-until tick() - startTime >= 10
-
--- Unequip Combat tool
-if Player.Character and Player.Character:FindFirstChild("Combat") then
-    Player.Character.Combat:Destroy()
-    print("Unequipped Combat tool.")
+-- Load the second script
+local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm")))
+if not success then
+    warn("Error loading boxing farm script:", err)
 end
 
--- Load and execute the second script
-local secondScript = loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/bbc"))
-if secondScript then
-    secondScript()
-    print("Second script executed.")
+-- Additional modifications
+local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
+
+-- Wait for the player to teleport
+wait(2)
+
+-- Find the item in the shop
+local itemName = "Boxing Moveset (Require: Max Box Stat) - $0"
+local itemToBuy = workspace.Ignored.Shop:FindFirstChild(itemName)
+
+if itemToBuy then
+    -- Click the item's ClickDetector
+    fireclickdetector(itemToBuy.ClickDetector)
 else
-    warn("Failed to load and execute the second script.")
+    warn(itemName .. " not found in the shop.")
 end
+
+-- Execute the rest of the script
+loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
+
+-- Additional modifications
+teleportToCoordinates(targetPosition)
+startNormalAttacking()
