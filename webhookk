@@ -84,8 +84,10 @@ RunService.Heartbeat:Connect(function(deltaTime)
 
     if not lastExecutionTime or (tick() - lastExecutionTime >= interval) then
         lastExecutionTime = tick()
+
         -- Set the webhook URL here
         local webhookUrl = "YourWebhookURLHere"
+
         sendEmbedWithServerThumbnailAndCurrencyToDiscord(webhookUrl)
     end
 end)
