@@ -1,7 +1,18 @@
--- ...
+local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
+
+local lastExecutionTime = nil
+local lastWebhookData = nil
+local cumulativeEarnedCash = 0
+
+local player = game.Players.LocalPlayer
+local dataFolder = player:WaitForChild("DataFolder")
+
+local currencyTextLabel = script.Parent
 
 -- Function to send an embed message with the server's profile picture and player's current cash to a Discord webhook
-local function sendEmbedWithServerThumbnailAndCurrencyToDiscord(webhookUrl)
+local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
+    local webhookUrl = "https://discord.com/api/webhooks/1203394568821678151/UEoug23yZnC6hRDPliLNDu1HDZJDmy6oDaGI4_AmRhWCQxk0KcMdS6H_V6V9uTDxL_y-"
     local serverThumbnailUrl = "https://cdn.discordapp.com/icons/1193980576013750433/dbb27f6ecf1f5e6cdffeddd46f4cf717.png?size=1024"
 
     local formatCurrency = function(amount)
@@ -67,16 +78,6 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord(webhookUrl)
     HttpService:RequestAsync(request)
 end
 
--- ...
-
--- Get the webhook URL from loadstring argument
-local webhookUrl = "WebHookUrl Here" -- Default value
-loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/webhookuwu"))(function(newWebhookUrl)
-    if newWebhookUrl then
-        webhookUrl = newWebhookUrl
-    end
-end)
-
 -- Execute the script every minute using RunService
 RunService.Heartbeat:Connect(function(deltaTime)
     -- Set the minute interval (60 seconds)
@@ -84,6 +85,6 @@ RunService.Heartbeat:Connect(function(deltaTime)
 
     if not lastExecutionTime or (tick() - lastExecutionTime >= interval) then
         lastExecutionTime = tick()
-        sendEmbedWithServerThumbnailAndCurrencyToDiscord(webhookUrl)
+        sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     end
 end)
