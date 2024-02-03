@@ -1,5 +1,5 @@
 -- Teleport the player to the specified coordinates
-game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(-236.885, 19.1, -1141.76)
+game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(-236.71836853027344, 22.065317153930664, -1141.49365234375)
 
 -- Wait for the player to teleport
 wait(2)
