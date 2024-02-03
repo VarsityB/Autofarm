@@ -200,7 +200,7 @@ VersionLabel.BorderSizePixel = 0
 VersionLabel.Position = UDim2.new(0.233858153, 0, 0.69890666, 0)
 VersionLabel.Size = UDim2.new(0.149645388, 0, 0.0538687594, 0)
 VersionLabel.Font = Enum.Font.Unknown
-VersionLabel.Text = "Version: 1.0"
+VersionLabel.Text = "Version: 1.1"
 VersionLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 VersionLabel.TextSize = 11.000
 
