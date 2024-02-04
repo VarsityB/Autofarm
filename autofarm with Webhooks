@@ -1,6 +1,3 @@
--- Load the first script (webhookk)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/webhookk", true))()
-
 -- Load the premium GUI script
 loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
 
