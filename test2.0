@@ -1,37 +1,52 @@
--- Set your webhook, webhook delay, and boxtrain settings
-getgenv().boxtrain = "false" -- Change to True if your Alts Are Box Trained
+-- Modify this function to check the value of getgenv().boxtrain
+local function shouldExecuteBoxTrain()
+    return getgenv().boxtrain == "true"
+end
 
 -- Load the first script
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Username/Repository/Branch/Script1.lua", true))()
+local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
+if not success then
+    warn("Error loading destroy map script:", err)
+end
 
--- Load the script to destroy the map
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Username/Repository/Branch/Script2.lua"))()
+-- Wait for the first script to run
+wait(5)  -- Adjust the wait time based on your needs
 
--- Load the premium GUI script
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Username/Repository/Branch/Script3.lua"))()
-
--- Check if boxtrain is true
-if getgenv().boxtrain == "true" then
-    -- Load the boxing farm script
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Username/Repository/Branch/Script4.lua"))()
-
-    -- Additional modifications for boxing farm
-    local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
-
-    -- Wait for the player to teleport
-    wait(2)
-
-    -- Find the item in the shop
-    local itemName = "Boxing Moveset (Require: Max Box Stat) - $0"
-    local itemToBuy = workspace.Ignored.Shop:FindFirstChild(itemName)
-
-    if itemToBuy then
-        -- Click the item's ClickDetector
-        fireclickdetector(itemToBuy.ClickDetector)
-    else
-        warn(itemName .. " not found in the shop.")
+-- Check if boxtrain should be executed
+if shouldExecuteBoxTrain() then
+    -- Load the second script
+    local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm")))
+    if not success then
+        warn("Error loading boxing farm script:", err)
     end
 end
 
--- Load the final script
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Username/Repository/Branch/Script5.lua"))()
+-- Additional modifications
+local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
+
+-- Wait for the player to teleport
+wait(2)
+
+-- Find the item in the shop
+local itemName = "Boxing Moveset (Require: Max Box Stat) - $0"
+local itemToBuy = workspace.Ignored.Shop:FindFirstChild(itemName)
+
+if itemToBuy then
+    -- Click the item's ClickDetector
+    fireclickdetector(itemToBuy.ClickDetector)
+else
+    warn(itemName .. " not found in the shop.")
+end
+
+-- Execute the rest of the script only if boxtrain should be executed
+if shouldExecuteBoxTrain() then
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
+    teleportToCoordinates(targetPosition)
+    startNormalAttacking()
+end
+
+-- Additional modifications
+if getgenv().boxtrain == "false" then
+    -- Ignore loading the second script
+    warn("Box train is set to false. Skipping loading of the second script.")
+else
