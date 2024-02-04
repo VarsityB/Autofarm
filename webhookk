@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 
-getgenv().lastExecutionTime = nil
+getgenv().startTime = tick()
 getgenv().lastWebhookData = nil
 getgenv().cumulativeEarnedCash = 0
 
@@ -24,6 +24,10 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     local earnedCash = currencyValue - startingCash
     getgenv().cumulativeEarnedCash = getgenv().cumulativeEarnedCash + earnedCash
 
+    local elapsedTime = tick() - getgenv().startTime
+    local elapsedMinutes = math.floor(elapsedTime / 60)
+    local elapsedSeconds = elapsedTime % 60
+
     local data = {
         embeds = {
             {
@@ -32,7 +36,10 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
                 thumbnail = {
                     url = serverThumbnailUrl
                 },
-                description = "Cash Info\n\nStarting Cash: " .. formatCurrency(startingCash) .. "\n\nCurrent Cash: " .. formatCurrency(currencyValue) .. "\n\nEarned Cash: " .. formatCurrency(getgenv().cumulativeEarnedCash)
+                description = "Cash Info\n\nStarting Cash: " .. formatCurrency(startingCash) ..
+                              "\n\nCurrent Cash: " .. formatCurrency(currencyValue) ..
+                              "\n\nEarned Cash: " .. formatCurrency(getgenv().cumulativeEarnedCash) ..
+                              "\n\nTime Elapsed: " .. string.format("%02d:%02d", elapsedMinutes, elapsedSeconds)
             }
         }
     }
@@ -60,11 +67,5 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
 end
 
 RunService.Heartbeat:Connect(function(deltaTime)
-    -- Set the minute interval (60 seconds)
-    local interval = 10
-
-    if not getgenv().lastExecutionTime or (tick() - getgenv().lastExecutionTime >= interval) then
-        getgenv().lastExecutionTime = tick()
-        sendEmbedWithServerThumbnailAndCurrencyToDiscord()
-    end
+    sendEmbedWithServerThumbnailAndCurrencyToDiscord()
 end)
