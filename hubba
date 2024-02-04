@@ -25,7 +25,7 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
                 thumbnail = {
                     url = serverThumbnailUrl
                 },
-                description = string.format("Cash Info\n\nStarting Cash: %s\n\nCurrent Cash: %s\n\nEarned Cash: %s\n\nElapsed Time: %d minutes %.2f seconds", formatCurrency(startingCash), formatCurrency(currencyValue), formatCurrency(getgenv().cumulativeEarnedCash), minutes, seconds)
+                description = string.format("Elapsed Time: %d minutes %.2f seconds", minutes, seconds)
             }
         }
     }
