@@ -1,5 +1,5 @@
 -- Load the first script
-loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/webhookk", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/meow/main/joe", true))()
 
 -- Load the premium GUI script
 loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
