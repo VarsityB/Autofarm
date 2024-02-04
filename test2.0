@@ -1,8 +1,6 @@
 -- Set the webhook and boxtrain values
-getgenv().webhook = "YourWebhookHere"  -- Put Your WebHook Here For Receiving Updates
-getgenv().boxtrain = "true" -- Change to False if your Alts Are Box Trained
+getgenv().boxtrain = "false" -- Change to False if your Alts Are Box Trained
 
--- Load the first script
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/webhookk", true))()
 
 -- Load the premium GUI script
