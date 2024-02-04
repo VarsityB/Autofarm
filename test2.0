@@ -1,13 +1,13 @@
 -- Set your webhook, webhook delay, and boxtrain settings
-getgenv().webhook = ""
-getgenv().webhookdelay = ""
-getgenv().boxtrain = ""  -- Set to "true" if you want to enable box training
+getgenv().webhook = "https://discord.com/api/webhooks/1195826940410601592/DxsfhzYrTrqmyCI8dZhuRAbaN09_GPGJpMi6h_MtLjJVd4oVOGy-Tkt0jhZeH7oXikqn"
+getgenv().webhookdelay = "1"
+getgenv().boxtrain = "false"  -- Set to "true" if you want to enable box training
 
 -- Load the first script
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/meow/main/joe", true))()
 
 -- Load the script to destroy the map
-local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
+local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destroy%20map")))
 if not success then
     warn("Error loading destroy map script:", err)
 end
