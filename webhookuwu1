@@ -79,7 +79,7 @@ end
 
 RunService.Heartbeat:Connect(function(deltaTime)
     -- Set the minute interval (60 seconds)
-    local interval = 60
+    local interval = 3600
 
     if not getgenv().lastExecutionTime or (tick() - getgenv().lastExecutionTime >= interval) then
         getgenv().lastExecutionTime = tick()
