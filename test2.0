@@ -1,28 +1,21 @@
 -- Set your webhook, webhook delay, and boxtrain settings
-getgenv().webhook = "" -- Put your webhook here
-getgenv().webhookdelay = "1" -- How Often You Want to Receive the Webhooks (in minutes)
-getgenv().boxtrain = "false" -- Change to False if your Alts Are Box Trained
+getgenv().boxtrain = "false" -- Change to True if your Alts Are Box Trained
 
 -- Load the first script
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/meow/main/joe", true))()
 
 -- Load the script to destroy the map
-local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destroy%20map")))
-if not success then
-    warn("Error loading destroy map script:", err)
-end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destroy%20map"))()
 
 -- Load the premium GUI script
 loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
 
--- Wait for the first scripts to run
-wait(5) -- Adjust the wait time based on your needs
-
--- Check if boxtrain is true and load the hubba script
+-- Check if boxtrain is true
 if getgenv().boxtrain == "true" then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/hubba"))()
+    -- Load the boxing farm script
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm"))()
 
-    -- Additional modifications
+    -- Additional modifications for boxing farm
     local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
 
     -- Wait for the player to teleport
@@ -38,13 +31,7 @@ if getgenv().boxtrain == "true" then
     else
         warn(itemName .. " not found in the shop.")
     end
-else
-    print("Box training is disabled.")
 end
 
--- Execute the rest of the script for auto-boxing farm only if boxtrain is true
-if getgenv().boxtrain == "true" then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm"))()
-else
-    print("Auto-boxing farm is disabled.")
-end
+-- Load the final script
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/gg"))()
