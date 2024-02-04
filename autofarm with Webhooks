@@ -39,9 +39,4 @@ end
 -- Wait for the purchase to complete
 wait(2)
 
--- Teleport to the specified coordinates
 loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
-teleportToCoordinates(targetPosition)
-
--- Start normal attacking to begin autofarming
-startNormalAttacking()
