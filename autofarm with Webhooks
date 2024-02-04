@@ -32,11 +32,14 @@ local itemToBuy = workspace.Ignored.Shop:FindFirstChild(itemName)
 if itemToBuy then
     -- Click the item's ClickDetector
     fireclickdetector(itemToBuy.ClickDetector)
+    
+    -- Wait for the purchase to complete
+    repeat
+        wait()
+    until not itemToBuy.Parent or not itemToBuy.Parent.Parent
+
+    -- Load the bottom script after the purchase
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
 else
     warn(itemName .. " not found in the shop.")
 end
-
--- Wait for the purchase to complete
-wait(2)
-
-loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
