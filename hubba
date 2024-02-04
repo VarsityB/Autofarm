@@ -18,16 +18,14 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     local seconds = elapsedTime % 60
 
     local data = {
-        embeds = {
-            {
-                title = "**VARSITYS AUTOFARM**",
-                color = 0x9c8cfa,  -- Light Purple
-                thumbnail = {
-                    url = serverThumbnailUrl
-                },
-                description = string.format("Elapsed Time: %d minutes %.2f seconds", minutes, seconds)
+        embeds = {{
+            title = "**VARSITYS AUTOFARM**",
+            color = 0x9c8cfa,  -- Light Purple
+            thumbnail = { url = serverThumbnailUrl },
+            fields = {
+                { name = "Elapsed Time", value = string.format("%d minutes %.2f seconds", minutes, seconds), inline = false }
             }
-        }
+        }}
     }
 
     local headers = {
