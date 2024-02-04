@@ -1,8 +1,6 @@
--- Set the webhook and boxtrain values
-getgenv().boxtrain = "true" -- Change to False if your Alts Are Box Trained
-
--- Load the script for the webhook
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/webhookk", true))()
+
+getgenv().boxtrain = "true" -- Change to False if your Alts Are Box Trained
 
 -- Load the script to destroy the map
 local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
