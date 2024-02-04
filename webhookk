@@ -5,7 +5,7 @@ getgenv().lastExecutionTime = nil
 getgenv().lastWebhookData = nil
 getgenv().cumulativeEarnedCash = 0
 getgenv().webhook = "" -- Set the initial webhook URL
-getgenv().intervalMinutes = 1 -- Set the initial interval in minutes
+getgenv().interval = 1 -- Set the initial interval in minutes
 
 local player = game.Players.LocalPlayer
 local dataFolder = player:WaitForChild("DataFolder")
@@ -81,7 +81,7 @@ end
 
 RunService.Heartbeat:Connect(function(deltaTime)
     -- Set the interval in seconds
-    local intervalSeconds = getgenv().intervalMinutes * 60
+    local intervalSeconds = getgenv().interval * 60
 
     if not getgenv().lastExecutionTime or (tick() - getgenv().lastExecutionTime >= intervalSeconds) then
         getgenv().lastExecutionTime = tick()
