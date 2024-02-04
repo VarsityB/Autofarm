@@ -1,5 +1,7 @@
 -- Set your webhook, webhook delay, and boxtrain settings
-getgenv().boxtrain = "false"  -- Set to "true" if you want to enable box training
+getgenv().webhook = "" -- Put your webhook here
+getgenv().webhookdelay = "1" -- How Often You Want to Receive the Webhooks (in minutes)
+getgenv().boxtrain = "false" -- Change to False if your Alts Are Box Trained
 
 -- Load the first script
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/meow/main/joe", true))()
@@ -14,7 +16,7 @@ end
 loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
 
 -- Wait for the first scripts to run
-wait(5)  -- Adjust the wait time based on your needs
+wait(5) -- Adjust the wait time based on your needs
 
 -- Check if boxtrain is true and load the hubba script
 if getgenv().boxtrain == "true" then
