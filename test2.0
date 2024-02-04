@@ -1,5 +1,5 @@
 -- Set the webhook and boxtrain values
-getgenv().webhook = "https://discord.com/api/webhooks/1177093288902262854/ywM9RUdLsLD4F5CGRTXIb5f9AO66KVU10Wio5ewUKtjcI9QdadncuO_8aOfGxomjOVRY"  -- Put Your WebHook Here For Receiving Updates
+getgenv().webhook = ""  -- Put Your WebHook Here For Receiving Updates
 getgenv().boxtrain = "true" -- Change to False if your Alts Are Box Trained
 
 -- Load the script for the webhook
