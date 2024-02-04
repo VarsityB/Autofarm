@@ -1,10 +1,9 @@
 -- Set the webhook and boxtrain values
-getgenv().boxtrain = "false" -- Change to False if your Alts Are Box Trained
+getgenv().webhook = "https://discord.com/api/webhooks/1177093288902262854/ywM9RUdLsLD4F5CGRTXIb5f9AO66KVU10Wio5ewUKtjcI9QdadncuO_8aOfGxomjOVRY"  -- Put Your WebHook Here For Receiving Updates
+getgenv().boxtrain = "true" -- Change to False if your Alts Are Box Trained
 
+-- Load the script for the webhook
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/webhookk", true))()
-
--- Load the premium GUI script
-loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
 
 -- Load the script to destroy the map
 local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
@@ -12,42 +11,35 @@ if not success then
     warn("Error loading destroy map script:", err)
 end
 
--- Wait for the first script to run
+-- Load the premium GUI script
+loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
+
+-- Wait for the first scripts to run
 wait(5)  -- Adjust the wait time based on your needs
 
 -- Check if boxtrain is true and load the hubba script
-print("Checking boxtrain value:", getgenv().boxtrain)
 if getgenv().boxtrain == "true" then
-    print("Loading boxing farm script...")
-    local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm")))
-    if not success then
-        warn("Error loading boxing farm script:", err)
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/hubba"))()
+
+    -- Additional modifications
+    local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
+
+    -- Wait for the player to teleport
+    wait(2)
+
+    -- Find the item in the shop
+    local itemName = "Boxing Moveset (Require: Max Box Stat) - $0"
+    local itemToBuy = workspace.Ignored.Shop:FindFirstChild(itemName)
+
+    if itemToBuy then
+        -- Click the item's ClickDetector
+        fireclickdetector(itemToBuy.ClickDetector)
+    else
+        warn(itemName .. " not found in the shop.")
     end
+
+    -- Execute the rest of the script for boxing farm
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm"))()
 else
-    print("Box training is disabled. Continuing with the rest of the script...")
+    print("Box training is disabled.")
 end
-
--- Additional modifications
-print("Executing additional modifications...")
-local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
-
--- Wait for the player to teleport
-wait(2)
-
--- Find the item in the shop
-local itemName = "Boxing Moveset (Require: Max Box Stat) - $0"
-local itemToBuy = workspace.Ignored.Shop:FindFirstChild(itemName)
-
-if itemToBuy then
-    -- Click the item's ClickDetector
-    fireclickdetector(itemToBuy.ClickDetector)
-else
-    warn(itemName .. " not found in the shop.")
-end
-
--- Execute the rest of the script
-loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
-
--- Additional modifications after boxing farm
-teleportToCoordinates(targetPosition)
-startNormalAttacking()
