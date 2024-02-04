@@ -1,54 +1,39 @@
-local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
-    local webhookUrl = getgenv().webhook or ""
-    local serverThumbnailUrl = "https://cdn.discordapp.com/icons/1193980576013750433/dbb27f6ecf1f5e6cdffeddd46f4cf717.png?size=1024"
-
-    local formatCurrency = function(amount)
-        return string.format("$%s", tostring(amount):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", ""))
-    end
-
-    local currencyValue = dataFolder.Currency.Value
-    local startingCash = getgenv().lastWebhookData and getgenv().lastWebhookData.currentCash or currencyValue
-
-    local earnedCash = currencyValue - startingCash
-    getgenv().cumulativeEarnedCash = getgenv().cumulativeEarnedCash + earnedCash
-
-    -- Calculate the elapsed time in minutes and seconds
-    local elapsedTime = tick() - getgenv().lastExecutionTime
-    local minutes = math.floor(elapsedTime / 60)
-    local seconds = elapsedTime % 60
-
-    local data = {
-        embeds = {{
-            title = "**VARSITYS AUTOFARM**",
-            color = 0x9c8cfa,  -- Light Purple
-            thumbnail = { url = serverThumbnailUrl },
-            fields = {
-                { name = "Elapsed Time", value = string.format("%d minutes %.2f seconds", minutes, seconds), inline = false }
-            }
-        }}
-    }
-
-    local headers = {
-        ["Content-Type"] = "application/json"
-    }
-
-    local encodedData = HttpService:JSONEncode(data)
-
-    local request = {
-        Url = webhookUrl,
-        Method = "POST",
-        Headers = headers,
-        Body = encodedData
-    }
-
-    -- Update last webhook data
-    getgenv().lastWebhookData = {
-        currentCash = currencyValue
-    }
-
-    -- Update last execution time
-    getgenv().lastExecutionTime = tick()
-
-    -- Send the embed message
-    HttpService:RequestAsync(request)
+loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
+-- Load the first script
+local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
+if not success then
+    warn("Error loading destory map script:", err)
 end
+
+-- Wait for the first script to run
+wait(5)  -- Adjust the wait time based on your needs
+
+-- Load the second script
+local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm")))
+if not success then
+    warn("Error loading boxing farm script:", err)
+end
+
+-- Additional modifications
+local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
+
+-- Wait for the player to teleport
+wait(2)
+
+-- Find the item in the shop
+local itemName = "Boxing Moveset (Require: Max Box Stat) - $0"
+local itemToBuy = workspace.Ignored.Shop:FindFirstChild(itemName)
+
+if itemToBuy then
+    -- Click the item's ClickDetector
+    fireclickdetector(itemToBuy.ClickDetector)
+else
+    warn(itemName .. " not found in the shop.")
+end
+
+-- Execute the rest of the script
+loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
+
+-- Additional modifications
+teleportToCoordinates(targetPosition)
+startNormalAttacking()
