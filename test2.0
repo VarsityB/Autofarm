@@ -1,6 +1,10 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/meow/main/joe", true))()
+-- Set your webhook, webhook delay, and boxtrain settings
+getgenv().webhook = ""
+getgenv().webhookdelay = ""
+getgenv().boxtrain = ""  -- Set to "true" if you want to enable box training
 
-getgenv().boxtrain = "true" -- Change to False if your Alts Are Box Trained
+-- Load the first script
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/meow/main/joe", true))()
 
 -- Load the script to destroy the map
 local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
@@ -34,9 +38,13 @@ if getgenv().boxtrain == "true" then
     else
         warn(itemName .. " not found in the shop.")
     end
-
-    -- Execute the rest of the script for boxing farm
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm"))()
 else
     print("Box training is disabled.")
+end
+
+-- Execute the rest of the script for auto-boxing farm only if boxtrain is true
+if getgenv().boxtrain == "true" then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm"))()
+else
+    print("Auto-boxing farm is disabled.")
 end
