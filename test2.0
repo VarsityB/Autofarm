@@ -1,7 +1,5 @@
--- Modify this function to check the value of getgenv().boxtrain
-local function shouldExecuteBoxTrain()
-    return getgenv().boxtrain == "true"
-end
+-- Load premium GUI script
+loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/Autofarm/main/premium%20gui'))()
 
 -- Load the first script
 local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/destory%20map")))
@@ -13,7 +11,7 @@ end
 wait(5)  -- Adjust the wait time based on your needs
 
 -- Check if boxtrain should be executed
-if shouldExecuteBoxTrain() then
+if getgenv().boxtrain == "true" then
     -- Load the second script
     local success, err = pcall(loadstring(game:HttpGet("https://raw.githubusercontent.com/VarsityB/Autofarm/main/boxing%20farm")))
     if not success then
@@ -21,7 +19,7 @@ if shouldExecuteBoxTrain() then
     end
 end
 
--- Additional modifications
+-- Additional modifications when boxtrain is true
 local targetPosition = Vector3.new(-277.3309020996094, 23.595672607421875, -1125.0675048828125)
 
 -- Wait for the player to teleport
@@ -38,15 +36,9 @@ else
     warn(itemName .. " not found in the shop.")
 end
 
--- Execute the rest of the script only if boxtrain should be executed
-if shouldExecuteBoxTrain() then
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
-    teleportToCoordinates(targetPosition)
-    startNormalAttacking()
-end
+-- Execute the rest of the script
+loadstring(game:HttpGet('https://raw.githubusercontent.com/VarsityB/meow/main/meow'))()
 
 -- Additional modifications
-if getgenv().boxtrain == "false" then
-    -- Ignore loading the second script
-    warn("Box train is set to false. Skipping loading of the second script.")
-else
+teleportToCoordinates(targetPosition)
+startNormalAttacking()
