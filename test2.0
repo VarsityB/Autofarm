@@ -1,6 +1,4 @@
 -- Set your webhook, webhook delay, and boxtrain settings
-getgenv().webhook = "https://discord.com/api/webhooks/1195826940410601592/DxsfhzYrTrqmyCI8dZhuRAbaN09_GPGJpMi6h_MtLjJVd4oVOGy-Tkt0jhZeH7oXikqn"
-getgenv().webhookdelay = "1"
 getgenv().boxtrain = "false"  -- Set to "true" if you want to enable box training
 
 -- Load the first script
