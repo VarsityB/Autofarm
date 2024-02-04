@@ -1,26 +1,27 @@
 local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 
-local lastExecutionTime = nil
-local lastWebhookData = nil
-local cumulativeEarnedCash = 0
+getgenv().lastExecutionTime = nil
+getgenv().lastWebhookData = nil
+getgenv().cumulativeEarnedCash = 0
+getgenv().webhook = "" -- Set the initial webhook URL
+getgenv().intervalMinutes = 1 -- Set the initial interval in minutes
 
 local player = game.Players.LocalPlayer
 local dataFolder = player:WaitForChild("DataFolder")
 
 local currencyTextLabel = script.Parent
 
--- Function to send an embed message with the server's profile picture and player's current cash to a Discord webhook
 local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
-    local webhookUrl = "https://discord.com/api/webhooks/1203427626740490411/dT1PJ7VFh2WvcdPHbbf_yoilGwhrPDU-LUZiymvoM-A-gQ6dSqR4GKFSeykK5N0nb4zQ"
-    local serverThumbnailUrl = "https://cdn.discordapp.com/icons/1193980576013750433/dbb27f6ecf1f5e6cdffeddd46f4cf717.png?size=1024"
+    local webhookUrl = getgenv().webhook or ""
+    local serverThumbnailUrl = ""
 
     local formatCurrency = function(amount)
         return string.format("$%s", tostring(amount):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", ""))
     end
 
     local currencyValue = dataFolder.Currency.Value
-    local startingCash = lastWebhookData and lastWebhookData.currentCash or currencyValue
+    local startingCash = getgenv().lastWebhookData and getgenv().lastWebhookData.currentCash or currencyValue
 
     local currencyTextLabel = Instance.new("TextLabel")
     currencyTextLabel.Text = formatCurrency(currencyValue)
@@ -35,10 +36,10 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     startingCashTextLabel.BackgroundTransparency = 1
 
     local earnedCash = currencyValue - startingCash
-    cumulativeEarnedCash = cumulativeEarnedCash + earnedCash
+    getgenv().cumulativeEarnedCash = getgenv().cumulativeEarnedCash + earnedCash
 
     local earnedCashTextLabel = Instance.new("TextLabel")
-    earnedCashTextLabel.Text = "Earned Cash: " .. formatCurrency(cumulativeEarnedCash)
+    earnedCashTextLabel.Text = "Earned Cash: " .. formatCurrency(getgenv().cumulativeEarnedCash)
     earnedCashTextLabel.TextColor3 = Color3.new(1, 1, 1)
     earnedCashTextLabel.TextStrokeTransparency = 0.5
     earnedCashTextLabel.BackgroundTransparency = 1
@@ -47,7 +48,7 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
         embeds = {
             {
                 title = "**VARSITYS AUTOFARM**",
-                color = 65280,  -- Green color (you can change this to any color you want)
+                color = 65280,  -- Green
                 thumbnail = {
                     url = serverThumbnailUrl
                 },
@@ -70,7 +71,7 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     }
 
     -- Update last webhook data
-    lastWebhookData = {
+    getgenv().lastWebhookData = {
         currentCash = currencyValue
     }
 
@@ -78,13 +79,12 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     HttpService:RequestAsync(request)
 end
 
--- Execute the script every minute using RunService
 RunService.Heartbeat:Connect(function(deltaTime)
-    -- Set the minute interval (60 seconds)
-    local interval = 60
+    -- Set the interval in seconds
+    local intervalSeconds = getgenv().intervalMinutes * 60
 
-    if not lastExecutionTime or (tick() - lastExecutionTime >= interval) then
-        lastExecutionTime = tick()
+    if not getgenv().lastExecutionTime or (tick() - getgenv().lastExecutionTime >= intervalSeconds) then
+        getgenv().lastExecutionTime = tick()
         sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     end
 end)
