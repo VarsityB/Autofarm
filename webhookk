@@ -1,5 +1,4 @@
 local RunService = game:GetService("RunService")
-local HttpService = game:GetService("HttpService")
 
 getgenv().lastExecutionTime = nil
 getgenv().lastWebhookData = nil
@@ -44,39 +43,13 @@ local function sendEmbedWithServerThumbnailAndCurrencyToDiscord()
     earnedCashTextLabel.TextStrokeTransparency = 0.5
     earnedCashTextLabel.BackgroundTransparency = 1
 
-    local data = {
-        embeds = {
-            {
-                title = "**VARSITYS AUTOFARM**",
-                color = 65280,  -- Green
-                thumbnail = {
-                    url = serverThumbnailUrl
-                },
-                description = "Cash Info\n\nStarting Cash: " .. startingCashTextLabel.Text .. "\n\nCurrent Cash: " .. currencyTextLabel.Text .. "\n\n" .. earnedCashTextLabel.Text
-            }
-        }
-    }
-
-    local headers = {
-        ["Content-Type"] = "application/json"
-    }
-
-    local encodedData = HttpService:JSONEncode(data)
-
-    local request = {
-        Url = webhookUrl,
-        Method = "POST",
-        Headers = headers,
-        Body = encodedData
-    }
+    -- Print the information instead of sending it to Discord
+    print("Cash Info\n\nStarting Cash: " .. startingCashTextLabel.Text .. "\n\nCurrent Cash: " .. currencyTextLabel.Text .. "\n\n" .. earnedCashTextLabel.Text)
 
     -- Update last webhook data
     getgenv().lastWebhookData = {
         currentCash = currencyValue
     }
-
-    -- Send the embed message
-    HttpService:RequestAsync(request)
 end
 
 RunService.Heartbeat:Connect(function(deltaTime)
