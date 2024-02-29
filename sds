@@ -4,7 +4,11 @@ local data = {
     ["content"] = "",
     ["embeds"] = {{
         ["title"] = "**Varsitys AutoFarm**",
-        ["description"] = "Cash Info",
+        ["description"] = "**Cash Info**
+
+**Starting Cash:**
+**Current Cash:**
+**Earned Cash:**",
         ["color"] = tonumber(0887FF), -- Red color
 
     }}
