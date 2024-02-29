@@ -4,11 +4,10 @@ local formatCurrency = function(amount)
     return string.format("$%s", tostring(amount):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", ""))
 end
 
-getgenv().startTime = tick()
-getgenv().cumulativeEarnedCash = 0
-
 local player = game.Players.LocalPlayer
 local dataFolder = player:WaitForChild("DataFolder")
+
+local currencyTextLabel = script.Parent
 
 local function sendVarsityAutofarmEmbedToDiscord()
     local webhookUrl = Link
@@ -47,22 +46,12 @@ local function sendVarsityAutofarmEmbedToDiscord()
 
     local encodedData = game:GetService("HttpService"):JSONEncode(data)
 
-    local request = {
+    local response = request({
         Url = webhookUrl,
+        Body = encodedData,
         Method = "POST",
-        Headers = headers,
-        Body = encodedData
-    }
-
-    -- Update last webhook data only if it's not set
-    if not getgenv().lastWebhookData then
-        getgenv().lastWebhookData = {
-            startingCash = currencyValue
-        }
-    end
-
-    -- Send the embed message
-    game:GetService("HttpService"):RequestAsync(request)
+        Headers = {["content-type"] = "application/json"}
+    })
 end
 
 -- Call the function to send the Varsitys Autofarm embed to Discord
