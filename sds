@@ -1,0 +1,69 @@
+local Link = getgenv().Webhook
+
+local formatCurrency = function(amount)
+    return string.format("$%s", tostring(amount):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", ""))
+end
+
+getgenv().startTime = tick()
+getgenv().cumulativeEarnedCash = 0
+
+local player = game.Players.LocalPlayer
+local dataFolder = player:WaitForChild("DataFolder")
+
+local function sendVarsityAutofarmEmbedToDiscord()
+    local webhookUrl = Link
+    local serverThumbnailUrl = "https://cdn.discordapp.com/icons/1193980576013750433/dbb27f6ecf1f5e6cdffeddd46f4cf717.png?size=1024"
+
+    local currencyValue = dataFolder.Currency.Value
+
+    local elapsedTime = tick() - getgenv().startTime
+    local elapsedMinutes = math.floor(elapsedTime / 60)
+    local elapsedSeconds = elapsedTime % 60
+
+    local startingCash = getgenv().lastWebhookData and getgenv().lastWebhookData.startingCash or currencyValue
+
+    -- Calculate earnedCash based on the difference from the starting cash
+    local earnedCash = currencyValue - startingCash
+    getgenv().cumulativeEarnedCash = getgenv().cumulativeEarnedCash + earnedCash
+
+    local data = {
+        ["content"] = "",
+        ["embeds"] = {{
+            ["title"] = "**VARSITYS AUTOFARM**",
+            ["color"] = 0x9c8cfa,  -- Light Purple
+            ["thumbnail"] = {
+                ["url"] = serverThumbnailUrl
+            },
+            ["description"] = "Cash Info\n\nStarting Cash: " .. formatCurrency(startingCash) ..
+                              "\n\nCurrent Cash: " .. formatCurrency(currencyValue) ..
+                              "\n\nEarned Cash: " .. formatCurrency(getgenv().cumulativeEarnedCash) ..
+                              "\n\nTime Elapsed: " .. string.format("%02d:%02d", elapsedMinutes, elapsedSeconds)
+        }}
+    }
+
+    local headers = {
+        ["Content-Type"] = "application/json"
+    }
+
+    local encodedData = game:GetService("HttpService"):JSONEncode(data)
+
+    local request = {
+        Url = webhookUrl,
+        Method = "POST",
+        Headers = headers,
+        Body = encodedData
+    }
+
+    -- Update last webhook data only if it's not set
+    if not getgenv().lastWebhookData then
+        getgenv().lastWebhookData = {
+            startingCash = currencyValue
+        }
+    end
+
+    -- Send the embed message
+    game:GetService("HttpService"):RequestAsync(request)
+end
+
+-- Call the function to send the Varsitys Autofarm embed to Discord
+sendVarsityAutofarmEmbedToDiscord()
