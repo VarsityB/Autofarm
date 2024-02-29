@@ -1,50 +1,13 @@
--- Get the Discord webhook link from the global environment
 local Link = getgenv().Webhook
 
--- Function to format currency for display
-local formatCurrency = function(amount)
-    return string.format("$%s", tostring(amount):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", ""))
-end
-
--- Get the player and data folder
-local player = game.Players.LocalPlayer
-local dataFolder = player:WaitForChild("DataFolder")
-
--- Server thumbnail URL for the embed
-local serverThumbnailUrl = "https://cdn.discordapp.com/icons/1193980576013750433/dbb27f6ecf1f5e6cdffeddd46f4cf717.png?size=1024"
-
--- Calculate elapsed time
-local elapsedTime = tick() - getgenv().startTime
-local elapsedMinutes = math.floor(elapsedTime / 60)
-local elapsedSeconds = elapsedTime % 60
-
--- Get starting cash from the last webhook data or use the current currency value
-local startingCash = getgenv().lastWebhookData and getgenv().lastWebhookData.startingCash or dataFolder.Currency.Value
-
--- Calculate earnedCash based on the difference from the starting cash
-local earnedCash = dataFolder.Currency.Value - startingCash
-getgenv().cumulativeEarnedCash = getgenv().cumulativeEarnedCash + earnedCash
-
--- Create the data table for the Discord webhook
 local data = {
-    ["content"] = "",
+    ["content"] = "bbc",
     ["embeds"] = {{
-        ["title"] = "**Varsity Farm**",
-        ["color"] = 0x00FF00,  -- Green color
-        ["thumbnail"] = {
-            ["url"] = serverThumbnailUrl
-        },
-        ["description"] = "Cash Info\n\nStarting Cash: " .. formatCurrency(startingCash) ..
-                          "\n\nCurrent Cash: " .. formatCurrency(dataFolder.Currency.Value) ..
-                          "\n\nEarned Cash: " .. formatCurrency(getgenv().cumulativeEarnedCash) ..
-                          "\n\nTime Elapsed: " .. string.format("%02d:%02d", elapsedMinutes, elapsedSeconds)
+        ["title"] = "**Varsitys AutoFarm**",
+        ["description"] = "Cash Info",
+        ["color"] = tonumber(0xFF0000), -- Red color
+
     }}
 }
 
--- Send the Discord webhook
-local response = request({
-    Url = Link,
-    Body = game:GetService("HttpService"):JSONEncode(data),
-    Method = "POST",
-    Headers = {["content-type"] = "application/json"}
-})
+local response = request({Url=Link, Body=game:GetService("HttpService"):JSONEncode(data), Method="POST", Headers={["content-type"] = "application/json"}})
