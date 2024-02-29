@@ -1,11 +1,11 @@
 local Link = getgenv().Webhook
 
 local data = {
-    ["content"] = "bbc",
+    ["content"] = "",
     ["embeds"] = {{
         ["title"] = "**Varsitys AutoFarm**",
         ["description"] = "Cash Info",
-        ["color"] = tonumber(0xFF0000), -- Red color
+        ["color"] = tonumber(0887FF), -- Red color
 
     }}
 }
